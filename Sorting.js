@@ -71,3 +71,50 @@ function getMaxOccurrenceNumber(arr, n) {
     return result
 }
 console.log(getMaxOccurrenceNumber(arr,n))
+
+// Q: Given an array arr of size N. Your task is to determine that
+//  if by reversing any one subarray can the given array be sorted or not.
+let numbers = [1,4,2,3]
+function checkSubArray(arr) {
+  let start = -1, end = -1;
+  for(let i=0; i<arr.length -1; i++) {
+    if(arr[i] > arr[i+1]) {
+        if(start === -1) start = i
+        end = i+1
+    }
+  }
+  if(start === -1) return true
+
+  let reversedSubArray = arr.slice(start, end+1).reverse()
+  let newArr = [...arr.slice(0,start), ...reversedSubArray, ...arr.slice(end+1)]
+
+  for(let i=0; i<newArr.length-1; i++) {
+    if(newArr[i] > newArr[i+1]) return false
+  }
+
+  return true
+}
+let result = checkSubArray(numbers)
+console.log(result ? 'Yes' : 'No')
+
+
+// Q: You have a sequence p1, p2, p3..., pn which is a permutation of {1, 2, 3, ..., n}. 
+// You can do the following operation at most 1 time: Choose 2 indices i and j. Swap (pi, pj). Can you sort the permutation.
+let pairsArray = [5 ,1 ,2 ,4 ,3] 
+function checkPairs(arr) {
+    let start = -1;
+    let end = -1;
+    for(let i=0; i<arr.length -1; i++) {
+        if(arr[i] > arr[i+1]) {
+            if(start === -1) start = i;
+            end = i +1
+        }
+    }
+    if(start === -1) return true;
+    [arr[start], arr[end]] = [arr[end], arr[start]]
+    for(let i=0; i<arr.length -1; i++) {
+        if(arr[i] > arr[i+1]) return false
+    }
+    return true
+}
+console.log(checkPairs(pairsArray))
